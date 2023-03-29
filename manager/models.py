@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.urls import reverse
 
 
 class TaskType(models.Model):
@@ -22,8 +23,8 @@ class Task(models.Model):
     deadline = models.DateField()
     is_completed = models.BooleanField(default=False)
     priority = models.CharField(max_length=1, choices=PRIO_CHOICES, default="U")
-    task_type = models.ForeignKey(TaskType, on_delete=models.CASCADE, related_name="tasks")
-    assignees = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="workers")
+    task_type = models.ForeignKey(TaskType, on_delete=models.CASCADE)
+    assignees = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="tasks")
 
     class Meta:
         ordering = ["-deadline"]
@@ -56,3 +57,6 @@ class Worker(AbstractUser):
 
     class Meta:
         ordering = ["username"]
+
+    def get_absolute_url(self):
+        return reverse("manager:worker-detail", kwargs={"pk": self.pk})

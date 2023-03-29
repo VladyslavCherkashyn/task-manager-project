@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h2>
+    {{ task.name }}
+    <a style="float: right" href="{% url 'manager:task-delete' pk=task.id %}" class="btn btn-danger link-to-page">
+      Delete
+    </a>
+
+    <a style="float: right" href="{% url 'manager:task-update' pk=task.id %}" class="btn btn-secondary link-to-page">
+      Edit
+    </a>
+  </h2>
+  <p>
+    <strong>Type:</strong> {{ task.task_type.name }}
+    <br>
+    <strong>Priority:</strong> {{ task.priority }}
+    <br>
+    <strong>Deadline:</strong> {{ task.deadline }}
+    <br>
+    <p><strong>Status:</strong>
+    {% if task.is_completed is False %}
+      in progress
+    {% else %}
+      done
+    {% endif %}
+  </p>
+
+  <hr>
+
+  <div class="ml-3">
+    <h4>Workers</h4>
+
+    {% for worker in task.assignees.all %}
+      <hr>
+      <p><strong>Name:</strong> {{ worker.first_name }} {{ worker.last_name }}</p>
+      <p><strong>Position:</strong> {{ worker.position }}</p>
+      <p class="text-muted"><strong>Id:</strong> {{ task.id }}</p>
+
+    {% empty %}
+      <p>No workers!</p>
+    {% endfor %}
+  </div>
+{% endblock %}

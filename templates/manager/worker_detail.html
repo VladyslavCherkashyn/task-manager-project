@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>
+    Username: {{ worker.username }}
+  </h1>
+
+  <p><strong>Full name:</strong> {{ worker.first_name }} {{ worker.last_name }}</p>
+  <p><strong>Position:</strong> {{ worker.position }}</p>
+  <p><strong>Is staff:</strong> {{ worker.is_staff }}</p>
+
+  <div class="ml-3">
+    <h4>Tasks</h4>
+
+    {% for task in worker.tasks.all %}
+        <hr>
+
+        <p><strong>Task title:</strong> {{ task.name }}</p>
+        <p><strong>Status:</strong>
+          {% if task.is_completed is False %}
+            in progress
+          {% else %}
+            done
+          {% endif %}
+        </p>
+        <p><strong>Deadline:</strong> {{ task.deadline }}</p>
+        <p class="text-muted"><strong>Task Id:</strong> {{task.id}}</p>
+
+    {% empty %}
+      <p>No Task!</p>
+    {% endfor %}
+  </div>
+{% endblock %}
