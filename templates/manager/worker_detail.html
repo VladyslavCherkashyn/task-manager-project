@@ -7,27 +7,53 @@
 
   <p><strong>Full name:</strong> {{ worker.first_name }} {{ worker.last_name }}</p>
   <p><strong>Position:</strong> {{ worker.position }}</p>
-  <p><strong>Is staff:</strong> {{ worker.is_staff }}</p>
+  <p>Completed tasks: {{ completed_tasks.count }}</p>
+  <p>In progress tasks: {{ uncompleted_tasks.count }}</p>
+  <p>
+    Overdue tasks:
+    {% if uncompleted_tasks.count > 0 and  task.deadline < today_date %}
 
+    {% endif %}
+  </p>
+  {% for worker in worker_list %}
+    <li>ere: {{ worker.username }} {{ worker.num_tasks }}</li>>
+  {% endfor %}
   <div class="ml-3">
-    <h4>Tasks</h4>
 
+  <table class="table">
+      <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Priority</th>
+        <th>Status</th>
+        <th>Type</th>
+        <th>Deadline</th>
+
+      </tr>
     {% for task in worker.tasks.all %}
-        <hr>
-
-        <p><strong>Task title:</strong> {{ task.name }}</p>
-        <p><strong>Status:</strong>
+      {% if task.deadline < today_date and task.is_completed is False %}
+        <tr class="table-danger">
+      {% else %}
+        <tr>
+      {% endif %}
+        <td>{{ task.id }}</td>
+        <td><a href="{% url "manager:task-detail" pk=task.id %}">{{ task.name }}</a></td>
+        <td>{{ task.priority }}</td>
+        <td>
           {% if task.is_completed is False %}
-            in progress
+            {% if task.deadline < today_date %}
+              overdue
+            {% else %}
+              in progress
+            {% endif %}
           {% else %}
             done
           {% endif %}
-        </p>
-        <p><strong>Deadline:</strong> {{ task.deadline }}</p>
-        <p class="text-muted"><strong>Task Id:</strong> {{task.id}}</p>
-
-    {% empty %}
-      <p>No Task!</p>
+        </td>
+        <td>{{ task.task_type.name }}</td>
+          <td>{{ task.deadline.date }}</td>
+      </tr>
     {% endfor %}
+    </table>
   </div>
 {% endblock %}

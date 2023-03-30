@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
+
   <h1>
     Task list
     <a style="float: right" href="{% url 'manager:task-create' %}" class="btn btn-primary">Add new task</a>
@@ -13,20 +14,31 @@
         <th>Priority</th>
         <th>Status</th>
         <th>Type</th>
+        <th>Deadline</th>
+
       </tr>
     {% for task in task_list %}
-      <tr>
+      {% if task.deadline < today_date and task.is_completed is False %}
+        <tr class="table-danger">
+      {% else %}
+        <tr>
+      {% endif %}
         <td>{{ task.id }}</td>
-        <td><a href="{% url "manager:task-detail" pk=task.id %} ">{{ task.name }}</a></td>
+        <td><a href="{% url "manager:task-detail" pk=task.id %}">{{ task.name }}</a></td>
         <td>{{ task.priority }}</td>
         <td>
           {% if task.is_completed is False %}
-            in progress
+            {% if task.deadline < today_date %}
+              overdue
+            {% else %}
+              in progress
+            {% endif %}
           {% else %}
             done
           {% endif %}
         </td>
         <td>{{ task.task_type.name }}</td>
+          <td>{{ task.deadline.date }}</td>
       </tr>
     {% endfor %}
     </table>

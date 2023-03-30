@@ -33,7 +33,9 @@
 
     {% for worker in task.assignees.all %}
       <hr>
-      <p><strong>Name:</strong> {{ worker.first_name }} {{ worker.last_name }}</p>
+      <p>
+        <strong>Name:</strong> {{ worker.first_name }} {{ worker.last_name }}
+      </p>
       <p><strong>Position:</strong> {{ worker.position }}</p>
       <p class="text-muted"><strong>Id:</strong> {{ task.id }}</p>
 

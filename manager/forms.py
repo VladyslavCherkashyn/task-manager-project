@@ -33,7 +33,7 @@ class WorkerPositionUpdateForm(forms.ModelForm):
 
 
 class TaskForm(forms.ModelForm):
-    workers = forms.ModelMultipleChoiceField(
+    assignees = forms.ModelMultipleChoiceField(
         queryset=get_user_model().objects.all(),
         widget=forms.CheckboxSelectMultiple,
         required=False
@@ -41,10 +41,7 @@ class TaskForm(forms.ModelForm):
 
     class Meta:
         model = Task
-        fields = [
-            "name", "description", "deadline",
-            "is_completed", "priority"
-        ]
+        fields = "__all__"
 
 
 class TaskSearchForm(forms.Form):

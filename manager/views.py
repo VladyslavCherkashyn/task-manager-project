@@ -1,9 +1,12 @@
 from django.contrib.auth.decorators import login_required
+from django.utils import timezone
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
+from datetime import date
+
 
 from .models import Worker, Task
 from .forms import (WorkerCreationForm,
@@ -36,10 +39,14 @@ class TaskListView(LoginRequiredMixin, generic.ListView):
     model = Task
     paginate_by = 5
 
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super(TaskListView, self).get_context_data(**kwargs)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
 
         name = self.request.GET.get("name", "")
+        today_date = timezone.now()
+        task_list = self.get_queryset()
+        context["today_date"] = today_date
+        context["task_deadline_passed"] = task_list.filter(deadline__lt=today_date)
 
         context["search_form"] = TaskSearchForm(initial={
             "name": name
@@ -112,6 +119,26 @@ class WorkerListView(LoginRequiredMixin, generic.ListView):
 class WorkerDetailView(LoginRequiredMixin, generic.DetailView):
     model = Worker
     queryset = Worker.objects.all().prefetch_related("tasks__task_type")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        worker = self.object
+
+        completed_tasks = Task.objects.filter(assignees=worker, is_completed=True)
+        uncompleted_tasks = Task.objects.filter(assignees=worker, is_completed=False)
+
+        today_date = date.today()
+        overdue_tasks = Task.objects.filter(
+            assignees=worker,
+            is_completed=False,
+            deadline__lt=today_date
+        )
+
+        context["completed_tasks"] = completed_tasks
+        context["uncompleted_tasks"] = uncompleted_tasks
+        context["overdue_tasks"] = overdue_tasks
+        context["today_date"] = today_date
+        return context
 
 
 class WorkerCreateView(LoginRequiredMixin, generic.CreateView):

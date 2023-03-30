@@ -20,14 +20,14 @@ class Task(models.Model):
 
     name = models.CharField(max_length=70)
     description = models.TextField(blank=True, null=True)
-    deadline = models.DateField()
+    deadline = models.DateTimeField()
     is_completed = models.BooleanField(default=False)
     priority = models.CharField(max_length=1, choices=PRIO_CHOICES, default="U")
     task_type = models.ForeignKey(TaskType, on_delete=models.CASCADE)
     assignees = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="tasks")
 
     class Meta:
-        ordering = ["-deadline"]
+        ordering = ["deadline"]
         verbose_name = "task"
         verbose_name_plural = "tasks"
 
