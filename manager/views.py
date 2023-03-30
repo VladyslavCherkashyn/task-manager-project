@@ -1,9 +1,9 @@
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
-from django.views import generic
+from django.views import generic, View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from datetime import date
 
@@ -13,7 +13,7 @@ from .forms import (WorkerCreationForm,
                     WorkerUpdateForm,
                     TaskForm,
                     WorkerSearchForm,
-                    TaskSearchForm,
+                    TaskSearchForm, TaskUpdateForm,
                     )
 
 
@@ -47,6 +47,7 @@ class TaskListView(LoginRequiredMixin, generic.ListView):
         task_list = self.get_queryset()
         context["today_date"] = today_date
         context["task_deadline_passed"] = task_list.filter(deadline__lt=today_date)
+        context["task_update_form"] = TaskUpdateForm()
 
         context["search_form"] = TaskSearchForm(initial={
             "name": name
@@ -81,6 +82,16 @@ class TaskUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Task
     form_class = TaskForm
     success_url = reverse_lazy("manager:task-list")
+
+
+class TaskDoneView(LoginRequiredMixin, generic.UpdateView):
+    model = Task
+    fields = []
+    success_url = reverse_lazy('manager:task-list')
+
+    def form_valid(self, form):
+        form.instance.is_completed = True
+        return super().form_valid(form)
 
 
 class TaskDeleteView(LoginRequiredMixin, generic.DeleteView):

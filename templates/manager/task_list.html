@@ -13,39 +13,51 @@
   </form>
   {% if task_list %}
     <table class="table">
-      <tr>
-        <th>ID</th>
-        <th>Title</th>
-        <th>Priority</th>
-        <th>Status</th>
-        <th>Type</th>
-        <th>Deadline</th>
-
-      </tr>
-    {% for task in task_list %}
-      {% if task.deadline < today_date and task.is_completed is False %}
-        <tr class="table-danger">
-      {% else %}
+      <thead>
         <tr>
-      {% endif %}
-        <td>{{ task.id }}</td>
-        <td><a href="{% url "manager:task-detail" pk=task.id %}">{{ task.name }}</a></td>
-        <td>{{ task.priority }}</td>
-        <td>
-          {% if task.is_completed is False %}
-            {% if task.deadline < today_date %}
-              overdue
-            {% else %}
-              in progress
-            {% endif %}
+          <th>ID</th>
+          <th>Title</th>
+          <th>Priority</th>
+          <th>Status</th>
+          <th>Type</th>
+          <th>Deadline</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for task in task_list %}
+          {% if task.deadline < today_date and task.is_completed is False %}
+            <tr class="table-danger">
           {% else %}
-            done
+            <tr>
           {% endif %}
-        </td>
-        <td>{{ task.task_type.name }}</td>
-          <td>{{ task.deadline.date }}</td>
-      </tr>
-    {% endfor %}
+            <td>{{ task.id }}</td>
+            <td><a href="{% url "manager:task-detail" pk=task.id %}">{{ task.name }}</a></td>
+            <td>{{ task.priority }}</td>
+            <td>
+              {% if task.is_completed is False %}
+                {% if task.deadline < today_date %}
+                  overdue
+                {% else %}
+                  in progress
+                {% endif %}
+              {% else %}
+                done
+              {% endif %}
+            </td>
+            <td>{{ task.task_type.name }}</td>
+            <td>{{ task.deadline.date }}</td>
+            <td>
+              {% if task.is_completed is False %}
+                <form action="{% url 'manager:task-done' task.id %}" method="post">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-sm btn-success">Mark as done</button>
+                </form>
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
     </table>
   {% endif %}
 {% endblock %}
