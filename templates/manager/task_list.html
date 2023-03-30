@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load crispy_forms_filters %}
 
 {% block content %}
 
@@ -6,6 +7,10 @@
     Task list
     <a style="float: right" href="{% url 'manager:task-create' %}" class="btn btn-primary">Add new task</a>
   </h1>
+  <form action="" method="get" class="form-inline">
+    {{ search_form|crispy }}
+    <input class="btn btn-secondary" type="submit" value="🔎">
+  </form>
   {% if task_list %}
     <table class="table">
       <tr>
