@@ -10,7 +10,7 @@ from datetime import date
 
 from .models import Worker, Task
 from .forms import (WorkerCreationForm,
-                    WorkerPositionUpdateForm,
+                    WorkerUpdateForm,
                     TaskForm,
                     WorkerSearchForm,
                     TaskSearchForm,
@@ -146,9 +146,9 @@ class WorkerCreateView(LoginRequiredMixin, generic.CreateView):
     form_class = WorkerCreationForm
 
 
-class WorkerPositionUpdateView(LoginRequiredMixin, generic.UpdateView):
+class WorkerUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Worker
-    form_class = WorkerPositionUpdateForm
+    form_class = WorkerUpdateForm
     success_url = reverse_lazy("manager:worker-list")
 
 

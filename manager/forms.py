@@ -17,19 +17,11 @@ class WorkerCreationForm(UserCreationForm):
         )
 
 
-class WorkerPositionUpdateForm(forms.ModelForm):
-    position = forms.CharField(
-        required=True,
-        validators=[
-            RegexValidator(
-                r"^[A-Z]{3}\d{5}$", "Please enter valid position"
-            )
-        ]
-    )
+class WorkerUpdateForm(forms.ModelForm):
 
     class Meta(UserCreationForm):
         model = Worker
-        fields = ["position"]
+        fields = ["position", "first_name", "last_name", "username"]
 
 
 class TaskForm(forms.ModelForm):

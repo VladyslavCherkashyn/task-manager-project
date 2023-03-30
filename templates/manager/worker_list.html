@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Worker List
+    <h1>
+      Worker List
+      <a style="float: right" href="{% url 'manager:worker-create' %}" class="btn btn-primary">Add new worker</a>
     </h1>
 
     {% if worker_list %}

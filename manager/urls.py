@@ -11,7 +11,7 @@ from manager.views import (
     WorkerDetailView,
     WorkerCreateView,
     WorkerDeleteView,
-    WorkerPositionUpdateView,
+    WorkerUpdateView,
 )
 
 
@@ -38,7 +38,7 @@ urlpatterns = [
     ),
     path(
         "workers/<int:pk>/update_position",
-        WorkerPositionUpdateView.as_view(),
+        WorkerUpdateView.as_view(),
         name="worker-update",
     ),
 ]
