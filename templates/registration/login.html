@@ -4,21 +4,31 @@
 {% block content %}
 
 {% if form.errors %}
-  <p>Your username and password didn't match. Please try again.</p>
+  <div class="alert alert-danger" role="alert">
+    Your username and password didn't match. Please try again.
+  </div>
 {% endif %}
 
-<h1>Login</h1>
+<div class="row justify-content-center align-items-center mb-5">
+  <div class="col-md-4">
+    <div class="card p-4">
+      <div class="text-center mb-4">
+{#        <img src="{% static 'images/logo.png' %}" alt="Logo" class="img-fluid" style="max-height: 80px;">#}
+        <h1 class="h4 mt-3" style="color: #2A623D;">Login</h1>
+      </div>
 
-{% if next %}
-  <p>Please login to see this page.</p>
-{% endif %}
+      <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+        {{ form|crispy }}
 
-<form method="post" action="{% url 'login' %}">
-  {% csrf_token %}
-  {{ form|crispy }}
+        <div class="form-group mt-4">
+          <button type="submit" class="btn btn-success btn-block" style="background-color: #2A623D; border-color: #C0C0C0;">Login</button>
+        </div>
 
-  <input type="submit" value="Login" class="btn btn-primary" />
-  <input type="hidden" name="next" value="{{ next }}" />
-</form>
+        <input type="hidden" name="next" value="{{ next }}" />
+      </form>
+    </div>
+  </div>
+</div>
 
 {% endblock %}
