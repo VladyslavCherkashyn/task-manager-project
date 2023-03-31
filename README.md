@@ -4,6 +4,7 @@ Viewing the project and its functionality is available only after registration.
 Using the following login details you will be able to access the functionality of the project:
 
 Username: User
+
 Password: kdflglkfkdj1
 
 Available functionality:
