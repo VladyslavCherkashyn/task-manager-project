@@ -1,4 +1,19 @@
-# task-manager-project
+Created task management system using Django framework in python which helps company to manage there projects.
+
+Viewing the project and its functionality is available only after registration.
+Using the following login details you will be able to access the functionality of the project:
+
+Username: User
+Password: kdflglkfkdj1
+
+Available functionality:
+Adding employees / Editing data about employees / deleting employees / Viewing the general list of employees and searching by it / Viewing details about an employee, a counter of completed, not completed, overdue tasks, a table of all tasks associated with a particular employee
+
+Adding tasks / Editing tasks / Deleting tasks / Viewing the general list of tasks and searching by it / Viewing details about the task, a list of all employees associated with a specific task is available/ The task table highlights overdue tasks, it is possible to mark the task as completed in the general task table
+
+
+
+
 <img width="1109" alt="image" src="https://user-images.githubusercontent.com/85840582/228905527-4d436698-3380-407e-926f-ca448f801ffe.png">
 <img width="1166" alt="image" src="https://user-images.githubusercontent.com/85840582/228905641-71e9c5dc-9aa9-481f-aceb-89b54a297160.png">
 <img width="1267" alt="image" src="https://user-images.githubusercontent.com/85840582/228905703-7aab41e2-1a00-4248-a4e2-abe093483b9b.png">
