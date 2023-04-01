@@ -1,12 +1,12 @@
 <ul class="sidebar-nav list-group">
-  {% if user.is_authenticated %}
-    <li class="list-group-item" style="background-color: #C0C0C0; color: #2A623D">User: <a href="{{ user.get_absolute_url }}" style="color: #2A623D">{{ user.get_username }}</a></li>
-    <li class="list-group-item"><a href="{% url 'logout'%}?next={{request.path}}" style="color: #2A623D">Logout</a></li>
-  {% else %}
-    <li class="list-group-item"><a href="{% url 'login'%}?next={{request.path}}" style="color: #2A623D">Login</a></li>
-  {% endif %}
-  <br>
+  <li class="list-group-item" style="background-color: #C0C0C0; color: #2A623D"><a href="{% url 'manager:signup' %}" style="color: #2A623D">Sign up</a></li>
   <li class="list-group-item" style="background-color: #C0C0C0; color: #2A623D"><a href="{% url 'manager:index' %}" style="color: #2A623D">Home</a></li>
   <li class="list-group-item" style="background-color: #C0C0C0; color: #2A623D"><a href="{% url 'manager:worker-list' %}" style="color: #2A623D">All workers</a></li>
   <li class="list-group-item" style="background-color: #C0C0C0; color: #2A623D"><a href="{% url 'manager:task-list' %}" style="color: #2A623D">All tasks</a></li>
 </ul>
+  {% if user.is_authenticated %}
+    <li class="list-group-item" style="background-color: #C0C0C0; color: #2A623D">Profile: <a href="{{ user.get_absolute_url }}" style="color: #2A623D">{{ user.get_username }}</a></li>
+    <li class="list-group-item"><a href="{% url 'logout'%}?next={{request.path}}" style="color: #2A623D">Logout</a></li>
+  {% else %}
+    <li class="list-group-item"><a href="{% url 'login'%}?next={{request.path}}" style="color: #2A623D">Login</a></li>
+  {% endif %}

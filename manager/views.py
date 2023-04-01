@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
 from django.utils import timezone
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
@@ -166,6 +167,12 @@ class WorkerUpdateView(LoginRequiredMixin, generic.UpdateView):
 class WorkerDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Worker
     success_url = reverse_lazy("")
+
+
+class SignUp(generic.CreateView):
+    form_class = WorkerCreationForm
+    success_url = reverse_lazy("login")
+    template_name = "registration/signup.html"
 
 
 @login_required

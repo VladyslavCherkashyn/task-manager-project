@@ -13,6 +13,7 @@ from manager.views import (
     WorkerCreateView,
     WorkerDeleteView,
     WorkerUpdateView,
+    SignUp,
 )
 
 
@@ -43,6 +44,9 @@ urlpatterns = [
         WorkerUpdateView.as_view(),
         name="worker-update",
     ),
+    path(
+        "signup/",
+        SignUp.as_view(), name="signup"),
 ]
 
 app_name = "manager"
