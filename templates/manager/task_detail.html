@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+  <h2 class="text-muted" style="color:#2A623D">
+    {{ task.name }}
+    <a style="float: right" href="{% url 'manager:task-delete' pk=task.id %}" class="btn btn-danger: link-to-page: text-muted">
+      Delete
+    </a>
+    <a style="float: right" href="{% url 'manager:task-update' pk=task.id %}" class="btn btn-danger: link-to-page: text-muted">
+      Edit
+    </a>
+      </h2>
+  <p>
+    <strong style="color:#2A623D">Type:</strong> {{ task.task_type.name }}
+    <br>
+    <strong style="color:#2A623D">Priority:</strong> {{ task.priority }}
+    <br>
+    <strong style="color:#2A623D">Deadline:</strong> {{ task.deadline }}
+    <br>
+    <p><strong style="color:#2A623D">Status:</strong>
+    {% if task.is_completed is False %}
+      <span style="color:#2A623D">in progress</span>
+    {% else %}
+      <span style="color:#2A623D">done</span>
+    {% endif %}
+  </p>
+  <hr style="border-top: 1px solid #2A623D;">
+<div class="ml-3">
+  <h4 style="color:#2A623D">Workers</h4>
+  <table class="table table-bordered table-hover">
+    <thead style="background-color:#C0C0C0">
+      <tr>
+        <th style="color:#2A623D">ID</th>
+        <th style="color:#2A623D">Username</th>
+        <th style="color:#2A623D">Position</th>
+        <th style="color:#2A623D">Full name</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for worker in task.assignees.all %}
+        <tr>
+          <td>{{ worker.id }}</td>
+          <td>{{ worker.username }}</td>
+          <td>{{ worker.position }}</td>
+          <td>{{ worker.first_name }} {{ worker.last_name }}</td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="6" style="color:#2A623D">No workers!</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+    <h1 class="text-muted" style="color:#2A623D">
+      Worker List
+      <a style="float: right; color:#2A623D" href="{% url 'manager:worker-create' %}" class="btn btn-primary: text-muted">Add new worker</a>
+    </h1>
+  <form action="" method="get" class="form-inline">
+    {{ search_form|crispy }}
+    <input class="btn btn-secondary" type="submit" value="Search">
+  </form>
+
+    {% if worker_list %}
+    <table class="table">
+      <tr style="background-color: #C0C0C0; color: #2A623D">
+        <th>ID</th>
+        <th>Username</th>
+        <th>Full name</th>
+        <th>Position</th>
+        <th>Number of tasks</th>
+      </tr>
+    {% for worker in worker_list %}
+      <tr style="background-color: #E0E0E0; color: #2A623D">
+        <td>{{ worker.id }}</td>
+        <td><a style="color: #2A623D" href="{{ worker.get_absolute_url }}">{{ worker.username }} {% if user == worker %} (Me){% endif %}</a></td>
+        <td>{{ worker.first_name }} {{ worker.last_name }}</td>
+        <td>{{ worker.position }}</td>
+        <td>{{ worker.tasks.count }}</td>
+      </tr>
+    {% endfor %}
+
+    </table>
+    {% else %}
+      <p style="color: #2A623D">There are no workers</p>
+    {% endif %}
+{% endblock %}

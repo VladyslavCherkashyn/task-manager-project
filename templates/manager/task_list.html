@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+
+  <h1 class="text-muted" style="color:#2A623D">
+    Task list
+    <a style="float: right; color:#2A623D" href="{% url 'manager:task-create' %}" class="btn btn-primary: text-muted">Add new task</a>
+  </h1>
+  <form action="" method="get" class="form-inline">
+    {{ search_form|crispy }}
+    <input class="btn btn-secondary" type="submit" value="Search">
+  </form>
+  {% if task_list %}
+    <table class="table">
+      <thead>
+        <tr style="background-color: #C0C0C0; color: #2A623D;">
+          <th>ID</th>
+          <th>Title</th>
+          <th>Priority</th>
+          <th>Status</th>
+          <th>Type</th>
+          <th>Deadline</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for task in task_list %}
+          {% if task.deadline < today_date and task.is_completed is False %}
+            <tr class="table-danger">
+          {% else %}
+            <tr style="background-color: #E0E0E0;">
+          {% endif %}
+            <td>{{ task.id }}</td>
+            <td><a href="{% url "manager:task-detail" pk=task.id %}" style="color: #2A623D;">{{ task.name }}</a></td>
+            <td>{{ task.priority }}</td>
+            <td>
+              {% if task.is_completed is False %}
+                {% if task.deadline < today_date %}
+                  <span style="color: red;">overdue</span>
+                {% else %}
+                  <span style="color: #2A623D;">in progress</span>
+                {% endif %}
+              {% else %}
+                <span style="color: green;">done</span>
+              {% endif %}
+            </td>
+            <td>{{ task.task_type.name }}</td>
+            <td>{{ task.deadline.date }}</td>
+            <td>
+              {% if task.is_completed is False %}
+                <form action="{% url 'manager:task-done' task.id %}" method="post">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-sm btn-success" style="background-color: #2A623D;">Mark as done</button>
+                </form>
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% endif %}
+{% endblock %}
