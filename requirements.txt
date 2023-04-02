@@ -16,3 +16,4 @@ tomli==2.0.1
 typing_extensions==4.5.0
 tzdata==2023.3
 whitenoise==6.4.0
+gunicorn==20.1.0
