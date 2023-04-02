@@ -1,11 +1,11 @@
 Created task management system using Django framework in python which helps company to manage there projects.
 
 Viewing the project and its functionality is available only after registration.
-Using the following login details you will be able to access the functionality of the project:
 
-Username: User
+## Check it out!
 
-Password: kdflglkfkdj1
+[Task manager project deployed to Render](https://task-manager-duz7.onrender.com/)
+
 
 Available functionality:
 Adding employees / Editing data about employees / deleting employees / Viewing the general list of employees and searching by it / Viewing details about an employee, a counter of completed, not completed, overdue tasks, a table of all tasks associated with a particular employee
