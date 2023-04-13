@@ -6,6 +6,11 @@ Viewing the project and its functionality is available only after registration.
 
 [Task manager project deployed to Render](https://task-manager-duz7.onrender.com/)
 
+You can log in as a test user to use the website:
+
+login: guest
+password: hdskjf734kjhf
+
 
 Available functionality:
 Adding employees / Editing data about employees / deleting employees / Viewing the general list of employees and searching by it / Viewing details about an employee, a counter of completed, not completed, overdue tasks, a table of all tasks associated with a particular employee
