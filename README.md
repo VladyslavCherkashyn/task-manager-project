@@ -8,9 +8,9 @@ Viewing the project and its functionality is available only after registration.
 
 You can log in as a test user to use the website:
 
-**login: guest
+* login: guest
 
-**password: hdskjf734kjhf
+* password: hdskjf734kjhf
 
 
 Available functionality:
